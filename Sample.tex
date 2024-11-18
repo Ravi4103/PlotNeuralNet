@@ -1,0 +1,30 @@
+% Save this as cnn_diagram.tex in your GitHub repository
+\documentclass{standalone}
+\usepackage{import}
+\subimport{PlotNeuralNet/}{init}
+\usetikzlibrary{positioning}
+
+\begin{document}
+\begin{tikzpicture}
+    % Input
+    \node[canvas is zy plane at x=0] (input) {\includegraphics[width=5cm]{dummy.png}};
+
+    % Convolutional Layers
+    \ConvRelu[color1]{3}{128}{128}{128}{/}{input} % Conv Layer 1
+    \BatchNorm[color2]{128}{/} % Batch Norm Layer 1
+    \Pool[color3]{64}{64}{64}{/} % Max Pooling Layer 1
+
+    \ConvRelu[color1]{3}{64}{64}{128}{/}{64}{64}
+    \BatchNorm[color2]{64}{/} % Batch Norm Layer 2
+    \Pool[color3]{32}{32}{32}{/} % Max Pooling Layer 2
+
+    \ConvRelu[color1]{3}{32}{32}{64}{/}
+    \BatchNorm[color2]{32}{/} % Batch Norm Layer 3
+    \Pool[color3]{16}{16}{16}{/} % Max Pooling Layer 3
+
+    % Dense Layers
+    \FcRelu[color4]{4096}{128}{/}
+    \BatchNorm[color2]{128}{/} % Batch Norm after Dense
+    \FcSigmoid[color5]{128}{1}{/} % Output Layer
+\end{tikzpicture}
+\end{document}
